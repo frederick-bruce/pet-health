@@ -4,65 +4,79 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 60 56% 91%;
+    --foreground: 25 74% 31%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 60 56% 91%;
+    --card-foreground: 25 74% 31%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 60 56% 91%;
+    --popover-foreground: 25 74% 31%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 25 74% 31%;
+    --primary-foreground: 60 56% 91%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 34 41% 69%;
+    --secondary-foreground: 25 74% 31%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 34 41% 69%;
+    --muted-foreground: 25 74% 31%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 51 100% 50%;
+    --accent-foreground: 25 74% 31%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 60 56% 91%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 25 74% 31%;
+    --input: 25 74% 31%;
+    --ring: 25 74% 31%;
 
     --radius: 0.5rem;
+
+    /* New color variables */
+    --rich-brown: 25 74% 31%;
+    --tan: 34 41% 69%;
+    --cream: 60 56% 91%;
+    --charcoal: 206 16% 26%;
+    --autumn-gold: 51 100% 50%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 206 16% 26%;
+    --foreground: 60 56% 91%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 206 16% 26%;
+    --card-foreground: 60 56% 91%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 206 16% 26%;
+    --popover-foreground: 60 56% 91%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 60 56% 91%;
+    --primary-foreground: 206 16% 26%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 34 41% 69%;
+    --secondary-foreground: 206 16% 26%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 34 41% 69%;
+    --muted-foreground: 60 56% 91%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 51 100% 50%;
+    --accent-foreground: 206 16% 26%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 60 56% 91%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 60 56% 91%;
+    --input: 60 56% 91%;
+    --ring: 34 41% 69%;
+
+    /* Dark mode variations for new colors */
+    --rich-brown: 25 74% 41%;
+    --tan: 34 41% 59%;
+    --cream: 60 56% 81%;
+    --charcoal: 206 16% 36%;
+    --autumn-gold: 51 100% 40%;
   }
 }
 
@@ -73,4 +87,60 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Utility classes for new colors */
+@layer utilities {
+  .bg-rich-brown {
+    background-color: hsl(var(--rich-brown));
+  }
+  .bg-tan {
+    background-color: hsl(var(--tan));
+  }
+  .bg-cream {
+    background-color: hsl(var(--cream));
+  }
+  .bg-charcoal {
+    background-color: hsl(var(--charcoal));
+  }
+  .bg-autumn-gold {
+    background-color: hsl(var(--autumn-gold));
+  }
+
+  .text-rich-brown {
+    color: hsl(var(--rich-brown));
+  }
+  .text-tan {
+    color: hsl(var(--tan));
+  }
+  .text-cream {
+    color: hsl(var(--cream));
+  }
+  .text-charcoal {
+    color: hsl(var(--charcoal));
+  }
+  .text-autumn-gold {
+    color: hsl(var(--autumn-gold));
+  }
+}
+
+/* Additional custom styles */
+.gradient-bg {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--cream)),
+    hsl(var(--tan)),
+    hsl(var(--rich-brown))
+  );
+}
+
+.autumn-accent {
+  background: linear-gradient(
+    45deg,
+    hsl(var(--autumn-gold)),
+    hsl(var(--rich-brown))
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }

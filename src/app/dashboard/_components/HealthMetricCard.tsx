@@ -1,10 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type LucideIcon } from "lucide-react";
 
 interface HealthMetricCardProps {
   label: string;
   value: string;
-  icon: LucideIcon;
+  icon: React.ElementType;
 }
 
 export function HealthMetricCard({
