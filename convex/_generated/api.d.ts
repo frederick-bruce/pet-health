@@ -13,11 +13,8 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as appointments from "../appointments.js";
 import type * as dogs from "../dogs.js";
-import type * as files from "../files.js";
-import type * as healthLogs from "../healthLogs.js";
-import type * as http from "../http.js";
+import type * as medications from "../medications.js";
 import type * as openai from "../openai.js";
 import type * as users from "../users.js";
 
@@ -30,11 +27,8 @@ import type * as users from "../users.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  appointments: typeof appointments;
   dogs: typeof dogs;
-  files: typeof files;
-  healthLogs: typeof healthLogs;
-  http: typeof http;
+  medications: typeof medications;
   openai: typeof openai;
   users: typeof users;
 }>;

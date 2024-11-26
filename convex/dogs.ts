@@ -1,47 +1,64 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { Id } from "./_generated/dataModel";
 
-export const createDog = mutation({
-  args: {
-    name: v.string(),
-    breed: v.string(),
-    dateOfBirth: v.number(),
-    ownerId: v.id("users"),
-    avatarUrl: v.optional(v.string()),
-  },
+export const add = mutation({
+  args: { name: v.string(), breed: v.string() },
   handler: async (ctx, args) => {
-    const dogId = await ctx.db.insert("dogs", args);
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Called storeUser without authentication present");
+    }
+
+    // Get or create the user
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
+
+    let userId: Id<"users">;
+    if (!user) {
+      userId = await ctx.db.insert("users", {
+        name: identity.name!,
+        email: identity.email!,
+        tokenIdentifier: identity.tokenIdentifier,
+      });
+    } else {
+      userId = user._id;
+    }
+
+    const dogId = await ctx.db.insert("dogs", {
+      name: args.name,
+      breed: args.breed,
+      userId,
+    });
     return dogId;
   },
 });
 
-export const getDogs = query({
-  args: { ownerId: v.id("users") },
-  handler: async (ctx, args) => {
+export const list = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Called storeUser without authentication present");
+    }
+
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
+
+    if (!user) {
+      return [];
+    }
+
     return await ctx.db
       .query("dogs")
-      .withIndex("by_owner", (q) => q.eq("ownerId", args.ownerId))
+      .filter((q) => q.eq(q.field("userId"), user._id))
       .collect();
-  },
-});
-
-export const updateDog = mutation({
-  args: {
-    id: v.id("dogs"),
-    name: v.optional(v.string()),
-    breed: v.optional(v.string()),
-    dateOfBirth: v.optional(v.number()),
-    avatarUrl: v.optional(v.string()),
-  },
-  handler: async (ctx, args) => {
-    const { id, ...updateFields } = args;
-    await ctx.db.patch(id, updateFields);
-  },
-});
-
-export const deleteDog = mutation({
-  args: { id: v.id("dogs") },
-  handler: async (ctx, args) => {
-    await ctx.db.delete(args.id);
   },
 });

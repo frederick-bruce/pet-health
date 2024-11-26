@@ -1,65 +1,61 @@
-import React from "react";
+import { Navigation } from "@/components/Navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Link from "next/link";
 
-import { Activity, Heart, Weight } from "lucide-react";
-import { DogProfile } from "./_components/DogProfile";
-import { HealthMetricCard } from "./_components/HealthMetricCard";
-import { MedicationSchedule } from "./_components/MedicationSchedule";
-import { RecentActivities } from "./_components/RecentActivities";
-import { UpcomingAppointment } from "./_components/UpcomingAppointments";
-
-const healthMetrics = [
-  { label: "Weight", value: "15.5 kg", icon: Weight },
-  { label: "Heart Rate", value: "80 bpm", icon: Heart },
-  { label: "Activity", value: "2.5 hrs", icon: Activity },
-];
-
-const recentActivities = [
-  { date: "2023-07-15", activity: "Vet checkup" },
-  { date: "2023-07-14", activity: "Grooming session" },
-  { date: "2023-07-13", activity: "Vaccination" },
-];
-
-export default function DashboardPage() {
+export default function Dashboard() {
   return (
-    <div className="space-y-6 p-8 pt-6">
-      <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-        <DogProfile
-          className="md:col-span-2 lg:col-span-3"
-          name="Buddy"
-          breed="Golden Retriever"
-          age={3}
-          avatarSrc="/placeholder.svg?height=100&width=100"
-        />
-        <div className="grid gap-6 md:col-span-2 lg:col-span-4 lg:grid-cols-2">
-          {healthMetrics.map((metric, index) => (
-            <HealthMetricCard
-              key={index}
-              label={metric.label}
-              value={metric.value}
-              icon={metric.icon}
-            />
-          ))}
+    <div className="min-h-screen bg-gray-100">
+      <Navigation />
+      <main className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>My Dogs</CardTitle>
+              <CardDescription>Manage your dog profiles</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/dogs" className="text-blue-500 hover:underline">
+                View Dogs
+              </Link>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Medications</CardTitle>
+              <CardDescription>Track medications and schedules</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link
+                href="/medications"
+                className="text-blue-500 hover:underline"
+              >
+                View Medications
+              </Link>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Appointments</CardTitle>
+              <CardDescription>Manage vet appointments</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link
+                href="/appointments"
+                className="text-blue-500 hover:underline"
+              >
+                View Appointments
+              </Link>
+            </CardContent>
+          </Card>
         </div>
-        <MedicationSchedule
-          className="md:col-span-2 lg:col-span-3"
-          medicationName="Heartworm Prevention"
-          dosage="1 tablet"
-          frequency="once a month"
-          nextDose="2 hours"
-          progressValue={33}
-        />
-        <RecentActivities
-          className="md:col-span-2 lg:col-span-2"
-          activities={recentActivities}
-        />
-        <UpcomingAppointment
-          className="md:col-span-2 lg:col-span-2"
-          appointmentType="Annual Checkup"
-          date="July 30, 2023"
-          time="10:00 AM"
-        />
-      </div>
+      </main>
     </div>
   );
 }
