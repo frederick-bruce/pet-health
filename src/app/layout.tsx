@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ConvexClerkProvider from "@/providers/ConvexClerkProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,6 +36,7 @@ export default function RootLayout({
         >
           <main className="flex-grow container mx-auto px-4 py-8">
             {children}
+            <Toaster />
           </main>
         </body>
       </html>
