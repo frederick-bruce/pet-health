@@ -1,4 +1,4 @@
-import { Navigation } from "@/components/Navigation";
+"use client"
 import {
   Card,
   CardContent,
@@ -6,7 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { MedicationReminder } from "@/components/MedicationReminder";
 import Link from "next/link";
+import { Navigation } from "@/components/Navigation";
 
 export default function Dashboard() {
   return (
@@ -54,6 +56,9 @@ export default function Dashboard() {
               </Link>
             </CardContent>
           </Card>
+        </div>
+        <div className="mt-6">
+          <MedicationReminder />
         </div>
       </main>
     </div>

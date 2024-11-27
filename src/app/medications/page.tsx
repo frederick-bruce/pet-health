@@ -24,6 +24,7 @@ import { Id } from "../../../convex/_generated/dataModel";
 import { api } from "../../../convex/_generated/api";
 import { useToast } from "@/hooks/use-toast";
 import { Navigation } from "@/components/Navigation";
+import { MedicationReminder } from "@/components/MedicationReminder";
 
 type MedicationForm = {
   dogId: Id<"dogs"> | null;
@@ -35,28 +36,26 @@ type MedicationForm = {
 };
 
 export default function Medications() {
-  const dogs = useQuery(api.dogs.list) || [];
-  const medications = useQuery(api.medications.listAll) || [];
-  const addMedication = useMutation(api.medications.add);
-  const editMedication = useMutation(api.medications.edit);
-  const deleteMedication = useMutation(api.medications.remove);
-  const { toast } = useToast();
+  const dogs = useQuery(api.dogs.list) || []
+  const medications = useQuery(api.medications.listAll) || []
+  const addMedication = useMutation(api.medications.add)
+  const editMedication = useMutation(api.medications.edit)
+  const deleteMedication = useMutation(api.medications.remove)
+  const { toast } = useToast()
 
   const [newMedication, setNewMedication] = useState<MedicationForm>({
     dogId: null,
-    name: "",
-    dosage: "",
-    frequency: "",
-    startDate: "",
-    endDate: "",
-  });
+    name: '',
+    dosage: '',
+    frequency: '',
+    startDate: '',
+    endDate: '',
+  })
 
-  const [editingMedication, setEditingMedication] = useState<
-    (MedicationForm & { id: Id<"medications"> }) | null
-  >(null);
+  const [editingMedication, setEditingMedication] = useState<(MedicationForm & { id: Id<"medications"> }) | null>(null)
 
   const handleAddMedication = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (newMedication.dogId) {
       try {
         await addMedication({
@@ -66,38 +65,27 @@ export default function Medications() {
           frequency: newMedication.frequency,
           startDate: newMedication.startDate,
           endDate: newMedication.endDate || undefined,
-        });
+        })
         setNewMedication({
           dogId: null,
-          name: "",
-          dosage: "",
-          frequency: "",
-          startDate: "",
-          endDate: "",
-        });
-        toast({
-          title: "Success",
-          description: "Medication added successfully",
-        });
+          name: '',
+          dosage: '',
+          frequency: '',
+          startDate: '',
+          endDate: '',
+        })
+        toast({ title: "Success", description: "Medication added successfully" })
       } catch (error) {
-        console.error("Error adding medication:", error);
-        toast({
-          title: "Error",
-          description: "Failed to add medication",
-          variant: "destructive",
-        });
+        console.error("Error adding medication:", error)
+        toast({ title: "Error", description: "Failed to add medication", variant: "destructive" })
       }
     } else {
-      toast({
-        title: "Error",
-        description: "Please select a dog",
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: "Please select a dog", variant: "destructive" })
     }
-  };
+  }
 
   const handleEditMedication = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (editingMedication) {
       try {
         await editMedication({
@@ -107,41 +95,27 @@ export default function Medications() {
           frequency: editingMedication.frequency,
           startDate: editingMedication.startDate,
           endDate: editingMedication.endDate || undefined,
-        });
-        setEditingMedication(null);
-        toast({
-          title: "Success",
-          description: "Medication updated successfully",
-        });
+        })
+        setEditingMedication(null)
+        toast({ title: "Success", description: "Medication updated successfully" })
       } catch (error) {
-        console.error("Error updating medication:", error);
-        toast({
-          title: "Error",
-          description: "Failed to update medication",
-          variant: "destructive",
-        });
+        console.error("Error updating medication:", error)
+        toast({ title: "Error", description: "Failed to update medication", variant: "destructive" })
       }
     }
-  };
+  }
 
   const handleDeleteMedication = async (id: Id<"medications">) => {
-    if (confirm("Are you sure you want to delete this medication?")) {
+    if (confirm('Are you sure you want to delete this medication?')) {
       try {
-        await deleteMedication({ id });
-        toast({
-          title: "Success",
-          description: "Medication deleted successfully",
-        });
+        await deleteMedication({ id })
+        toast({ title: "Success", description: "Medication deleted successfully" })
       } catch (error) {
-        console.error("Error deleting medication:", error);
-        toast({
-          title: "Error",
-          description: "Failed to delete medication",
-          variant: "destructive",
-        });
+        console.error("Error deleting medication:", error)
+        toast({ title: "Error", description: "Failed to delete medication", variant: "destructive" })
       }
     }
-  };
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -153,12 +127,7 @@ export default function Medications() {
             <Label htmlFor="dogId">Dog</Label>
             <Select
               value={newMedication.dogId?.toString() || ""}
-              onValueChange={(value) =>
-                setNewMedication({
-                  ...newMedication,
-                  dogId: value as Id<"dogs">,
-                })
-              }
+              onValueChange={(value) => setNewMedication({ ...newMedication, dogId: value as Id<"dogs"> })}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select a dog" />
@@ -177,9 +146,7 @@ export default function Medications() {
             <Input
               id="name"
               value={newMedication.name}
-              onChange={(e) =>
-                setNewMedication({ ...newMedication, name: e.target.value })
-              }
+              onChange={(e) => setNewMedication({ ...newMedication, name: e.target.value })}
               required
             />
           </div>
@@ -188,23 +155,17 @@ export default function Medications() {
             <Input
               id="dosage"
               value={newMedication.dosage}
-              onChange={(e) =>
-                setNewMedication({ ...newMedication, dosage: e.target.value })
-              }
+              onChange={(e) => setNewMedication({ ...newMedication, dosage: e.target.value })}
               required
             />
           </div>
           <div>
-            <Label htmlFor="frequency">Frequency</Label>
+            <Label htmlFor="frequency">Frequency (HH:MM)</Label>
             <Input
               id="frequency"
+              type="time"
               value={newMedication.frequency}
-              onChange={(e) =>
-                setNewMedication({
-                  ...newMedication,
-                  frequency: e.target.value,
-                })
-              }
+              onChange={(e) => setNewMedication({ ...newMedication, frequency: e.target.value })}
               required
             />
           </div>
@@ -214,12 +175,7 @@ export default function Medications() {
               id="startDate"
               type="date"
               value={newMedication.startDate}
-              onChange={(e) =>
-                setNewMedication({
-                  ...newMedication,
-                  startDate: e.target.value,
-                })
-              }
+              onChange={(e) => setNewMedication({ ...newMedication, startDate: e.target.value })}
               required
             />
           </div>
@@ -229,19 +185,14 @@ export default function Medications() {
               id="endDate"
               type="date"
               value={newMedication.endDate}
-              onChange={(e) =>
-                setNewMedication({ ...newMedication, endDate: e.target.value })
-              }
+              onChange={(e) => setNewMedication({ ...newMedication, endDate: e.target.value })}
             />
           </div>
           <Button type="submit">Add Medication</Button>
         </form>
         <div className="space-y-4">
           {medications.map((medication) => (
-            <div
-              key={medication._id}
-              className="bg-white shadow-md rounded-lg p-6"
-            >
+            <div key={medication._id} className="bg-white shadow-md rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-2">{medication.name}</h2>
               <p>Dosage: {medication.dosage}</p>
               <p>Frequency: {medication.frequency}</p>
@@ -250,16 +201,13 @@ export default function Medications() {
               <div className="mt-4 space-x-2">
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      onClick={() =>
-                        setEditingMedication({
-                          ...medication,
-                          id: medication._id,
-                          endDate: medication.endDate || "",
-                        })
-                      }
-                    >
+                    <Button variant="outline" onClick={() =>
+                      setEditingMedication({
+                        ...medication,
+                        id: medication._id,
+                        endDate: medication.endDate || "",
+                      })
+                    }>
                       Edit
                     </Button>
                   </DialogTrigger>
@@ -272,12 +220,8 @@ export default function Medications() {
                         <Label htmlFor="edit-name">Medication Name</Label>
                         <Input
                           id="edit-name"
-                          value={editingMedication?.name || ""}
-                          onChange={(e) =>
-                            setEditingMedication((prev) =>
-                              prev ? { ...prev, name: e.target.value } : null
-                            )
-                          }
+                          value={editingMedication?.name || ''}
+                          onChange={(e) => setEditingMedication(prev => prev ? { ...prev, name: e.target.value } : null)}
                           required
                         />
                       </div>
@@ -285,27 +229,18 @@ export default function Medications() {
                         <Label htmlFor="edit-dosage">Dosage</Label>
                         <Input
                           id="edit-dosage"
-                          value={editingMedication?.dosage || ""}
-                          onChange={(e) =>
-                            setEditingMedication((prev) =>
-                              prev ? { ...prev, dosage: e.target.value } : null
-                            )
-                          }
+                          value={editingMedication?.dosage || ''}
+                          onChange={(e) => setEditingMedication(prev => prev ? { ...prev, dosage: e.target.value } : null)}
                           required
                         />
                       </div>
                       <div>
-                        <Label htmlFor="edit-frequency">Frequency</Label>
+                        <Label htmlFor="edit-frequency">Frequency (HH:MM)</Label>
                         <Input
                           id="edit-frequency"
-                          value={editingMedication?.frequency || ""}
-                          onChange={(e) =>
-                            setEditingMedication((prev) =>
-                              prev
-                                ? { ...prev, frequency: e.target.value }
-                                : null
-                            )
-                          }
+                          type="time"
+                          value={editingMedication?.frequency || ''}
+                          onChange={(e) => setEditingMedication(prev => prev ? { ...prev, frequency: e.target.value } : null)}
                           required
                         />
                       </div>
@@ -314,47 +249,33 @@ export default function Medications() {
                         <Input
                           id="edit-startDate"
                           type="date"
-                          value={editingMedication?.startDate || ""}
-                          onChange={(e) =>
-                            setEditingMedication((prev) =>
-                              prev
-                                ? { ...prev, startDate: e.target.value }
-                                : null
-                            )
-                          }
+                          value={editingMedication?.startDate || ''}
+                          onChange={(e) => setEditingMedication(prev => prev ? { ...prev, startDate: e.target.value } : null)}
                           required
                         />
                       </div>
                       <div>
-                        <Label htmlFor="edit-endDate">
-                          End Date (Optional)
-                        </Label>
+                        <Label htmlFor="edit-endDate">End Date (Optional)</Label>
                         <Input
                           id="edit-endDate"
                           type="date"
-                          value={editingMedication?.endDate || ""}
-                          onChange={(e) =>
-                            setEditingMedication((prev) =>
-                              prev ? { ...prev, endDate: e.target.value } : null
-                            )
-                          }
+                          value={editingMedication?.endDate || ''}
+                          onChange={(e) => setEditingMedication(prev => prev ? { ...prev, endDate: e.target.value } : null)}
                         />
                       </div>
                       <Button type="submit">Update Medication</Button>
                     </form>
                   </DialogContent>
                 </Dialog>
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDeleteMedication(medication._id)}
-                >
+                <Button variant="destructive" onClick={() => handleDeleteMedication(medication._id)}>
                   Delete
                 </Button>
               </div>
             </div>
           ))}
         </div>
+        <MedicationReminder />
       </main>
     </div>
-  );
+  )
 }
