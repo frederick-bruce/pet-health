@@ -23,9 +23,7 @@ export default function Dashboard() {
               <CardDescription>Manage your dog profiles</CardDescription>
             </CardHeader>
             <CardContent>
-              <Link href="/dogs" className="text-blue-500 hover:underline">
-                View Dogs
-              </Link>
+              <Link href="/dogs" className="text-blue-500 hover:underline">View Dogs</Link>
             </CardContent>
           </Card>
           <Card>
@@ -34,12 +32,7 @@ export default function Dashboard() {
               <CardDescription>Track medications and schedules</CardDescription>
             </CardHeader>
             <CardContent>
-              <Link
-                href="/medications"
-                className="text-blue-500 hover:underline"
-              >
-                View Medications
-              </Link>
+              <Link href="/medications" className="text-blue-500 hover:underline">View Medications</Link>
             </CardContent>
           </Card>
           <Card>
@@ -48,12 +41,7 @@ export default function Dashboard() {
               <CardDescription>Manage vet appointments</CardDescription>
             </CardHeader>
             <CardContent>
-              <Link
-                href="/appointments"
-                className="text-blue-500 hover:underline"
-              >
-                View Appointments
-              </Link>
+              <Link href="/appointments" className="text-blue-500 hover:underline">View Appointments</Link>
             </CardContent>
           </Card>
         </div>
@@ -62,5 +50,5 @@ export default function Dashboard() {
         </div>
       </main>
     </div>
-  );
+  )
 }

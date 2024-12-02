@@ -25,7 +25,8 @@ export default defineSchema({
     date: v.string(),
     time: v.string(),
     description: v.string(),
-    voiceNoteId: v.optional(v.id("voiceNotes")),
+    veterinarian: v.string(),
+    location: v.string(),
   }).index("by_dog", ["dogId"]),
   symptoms: defineTable({
     dogId: v.id("dogs"),
