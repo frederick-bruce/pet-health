@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "convex/react";
+"use client";
 
-import { Button } from "@/components/ui/button";
+import { useQuery } from "convex/react";
+import { useEffect, useState } from "react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "../../convex/_generated/api";
